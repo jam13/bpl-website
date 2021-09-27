@@ -24,6 +24,8 @@ const Hero = ({ blok }) => {
             className="object-cover object-center rounded"
             alt="hero"
             src="https://dummyimage.com/720x600"
+            width={720}
+            height={600}
           />
         </div>
       </div>
