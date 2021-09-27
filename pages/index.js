@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Storyblok, { useStoryblok } from "@/lib/storyblok";
-import DynamicComponent from "@/components/DynamicComponent";
+import DynamicComponent from "@/components/dynamicComponent";
 import Layout from "@/components/layout";
 import Container from "@/components/container";
 import Header from "@/components/header";
