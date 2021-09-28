@@ -1,6 +1,6 @@
-import SbEditable from "storyblok-react";
 import Hero from "@/components/hero";
 import Page from "@/components/page";
+import Placeholder from "@/components/placeholder";
 
 const Components = {
   hero: Hero,
@@ -10,17 +10,9 @@ const Components = {
 const DynamicComponent = ({ blok }) => {
   if (typeof Components[blok.component] !== "undefined") {
     const Component = Components[blok.component];
-    return (
-      <SbEditable content={blok}>
-        <Component blok={blok} />
-      </SbEditable>
-    );
+    return <Component blok={blok} />;
   }
-  return (
-    <p>
-      The component <strong>{blok.component}</strong> has not been created yet.
-    </p>
-  );
+  return <Placeholder componentName={blok.component} />;
 };
 
 export default DynamicComponent;

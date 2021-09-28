@@ -30,7 +30,7 @@ export async function getStaticProps({ params, preview = false }) {
 
   let sbParams = {
     // change to `published` to load the published version
-    version: "draft", // or published
+    version: "published", // or 'draft'
   };
 
   if (preview) {
