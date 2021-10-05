@@ -5,7 +5,7 @@ import Layout from "@/components/layout";
 import Container from "@/components/container";
 import Header from "@/components/header";
 
-export default function Home({ story, preview }) {
+export default function Home({ story, global, preview }) {
   const enableBridge = true; // load the storyblok bridge everywhere
   story = useStoryblok(story, enableBridge);
   return (
@@ -14,7 +14,7 @@ export default function Home({ story, preview }) {
         <title>BPL Website</title>
       </Head>
       <Container>
-        <Header />
+        <Header blok={global.content} />
         <DynamicComponent blok={story.content} />
       </Container>
     </Layout>
@@ -35,11 +35,13 @@ export async function getStaticProps({ preview = false }) {
     sbParams.cv = Date.now();
   }
 
-  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+  let story = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+  let global = await Storyblok.get(`cdn/stories/global`, sbParams);
 
   return {
     props: {
-      story: data ? data.story : null,
+      story: story.data ? story.data.story : null,
+      global: global.data ? global.data.story : null,
       preview,
     },
     revalidate: 3600,

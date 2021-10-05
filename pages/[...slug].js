@@ -6,9 +6,9 @@ import Layout from "@/components/layout";
 import Container from "@/components/container";
 import Header from "@/components/header";
 
-export default function Page({ story, preview }) {
+export default function Page({ story, global, preview }) {
   const enableBridge = true; // load the storyblok bridge everywhere
-  // const enableBridge = preview; // enable bridge only in prevew mode
+  // const enableBridge = preview; // enable bridge only in preview mode
   story = useStoryblok(story, enableBridge);
 
   return (
@@ -17,7 +17,7 @@ export default function Page({ story, preview }) {
         <title>BPL Website</title>
       </Head>
       <Container>
-        <Header />
+        <Header blok={global.content}/>
         <DynamicComponent blok={story.content} />
       </Container>
     </Layout>
@@ -39,11 +39,13 @@ export async function getStaticProps({ params, preview = false }) {
     sbParams.cv = Date.now();
   }
 
-  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+  let { data: storyData } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+  let { data: globalData } = await Storyblok.get(`cdn/stories/global`, sbParams);
 
   return {
     props: {
-      story: data ? data.story : null,
+      story: storyData ? storyData.story : null,
+      global: globalData ? globalData.story : null,
       preview,
     },
     revalidate: 3600, // revalidate every hour
@@ -66,7 +68,7 @@ export async function getStaticPaths() {
     const slug = data.links[linkKey].slug;
     let splittedSlug = slug.split("/");
 
-    // cretes all the routes
+    // creates all the routes
     paths.push({ params: { slug: splittedSlug } });
   });
 

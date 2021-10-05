@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Placeholder from "@/components/placeholder";
+import SbEditable from "storyblok-react";
 
 const HeroImage = ({ blok }) => {
   const imagePlaceholder = "https://dummyimage.com/720x600";
@@ -18,7 +19,7 @@ const HeroImage = ({ blok }) => {
 
 const HeroAction = ({ blok }) => (
   <div className="flex justify-center">
-    <Link href={blok.link["cached_url"]}>
+    <Link href={blok.link["cached_url"]} passHref>
       <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
         {blok.label || "Go"}
       </button>
@@ -47,33 +48,41 @@ const HeroWrapper = ({ children }) => (
 const Hero = ({ blok }) => {
   const { layout } = blok;
 
-  if (layout == "left") {
+  if (layout === "left") {
     return (
-      <HeroWrapper>
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
-          <HeroImage blok={blok} />
-        </div>
-        <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-          <HeroText blok={blok} />
-        </div>
-      </HeroWrapper>
+      <SbEditable content={blok}>
+        <HeroWrapper>
+          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+            <HeroImage blok={blok} />
+          </div>
+          <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+            <HeroText blok={blok} />
+          </div>
+        </HeroWrapper>
+      </SbEditable>
     );
   }
 
-  if (layout == "right") {
+  if (layout === "right") {
     return (
-      <HeroWrapper>
-        <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-          <HeroText blok={blok} />
-        </div>
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-          <HeroImage blok={blok} />
-        </div>
-      </HeroWrapper>
+      <SbEditable content={blok}>
+        <HeroWrapper>
+          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+            <HeroText blok={blok} />
+          </div>
+          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+            <HeroImage blok={blok} />
+          </div>
+        </HeroWrapper>
+      </SbEditable>
     );
   }
 
-  return <Placeholder />
-};
+  return (
+    <SbEditable content={blok}>
+      <Placeholder />
+    </SbEditable>
+  );
+}
 
 export default Hero;
