@@ -1,12 +1,20 @@
-import Hero from "@/components/hero";
+import Hero from "@/components/sections/hero";
 import Page from "@/components/page";
 import Placeholder from "@/components/placeholder";
-import Section from "@/components/section";
+import Quote from "@/components/sections/quote";
+import FeatureList from "@/components/sections/featureList";
+import FeatureCards from "@/components/sections/featureCards";
+import HeaderSection from "@/components/sections/headerSection";
+import BannerImage from "@/components/sections/bannerImage";
 
 const Components = {
-  hero: Hero,
   page: Page,
-  section: Section,
+  hero: Hero,
+  quote: Quote,
+  feature_list: FeatureList,
+  feature_cards: FeatureCards,
+  header: HeaderSection,
+  banner_image: BannerImage,
 };
 
 const DynamicComponent = ({ blok }) => {
